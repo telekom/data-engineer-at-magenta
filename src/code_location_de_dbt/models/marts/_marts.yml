@@ -1,0 +1,16 @@
+version: 2
+
+# TODO: Add model descriptions and column-level tests for all mart models.
+#
+# Mart models are the public API of your data warehouse — BI tools and
+# dashboards query these directly. Every column should be documented.
+# Every primary key should be tested for uniqueness and non-null.
+#
+# Think about: which tests would actually catch a real data bug?
+# Which tests are just boilerplate that would never fail in practice?
+#
+# DECISION POINT: Test coverage philosophy
+#   # DECISION: I added these tests because ...
+
+models:
+  []

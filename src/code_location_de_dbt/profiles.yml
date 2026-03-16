@@ -1,0 +1,11 @@
+de_magenta:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('ANALYTICS_DB_PATH', '../../analytics_database_dev.duckdb') }}"
+      schema: main
+    prod:
+      type: duckdb
+      path: "{{ env_var('ANALYTICS_DB_PATH', '../../analytics_database_prod.duckdb') }}"
+      schema: main

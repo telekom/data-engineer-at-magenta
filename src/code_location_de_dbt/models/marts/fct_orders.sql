@@ -1,0 +1,39 @@
+-- Mart model: orders fact table
+--
+-- DECISION POINT: What is the grain of this table?
+--
+--   Option A: One row per order (order_id is the primary key)
+--     Simpler to query; good for order-level KPIs like AOV and order count
+--     Requires pre-aggregating line items → some detail is lost
+--
+--   Option B: One row per order line item (order_id + product_id is the PK)
+--     Preserves full detail; flexible for both order and product analysis
+--     BI tools need to be careful about double-counting order-level metrics
+--
+-- Pick one, implement it, and leave a comment explaining your reasoning.
+-- # DECISION: The grain of this table is ... because ...
+--
+-- Input: {{ ref('int_order_items') }}
+--
+-- Suggested columns for Option A (order grain):
+--   order_id               integer
+--   user_id                integer
+--   order_date             date
+--   total_items            integer
+--   distinct_products      integer
+--   total_revenue_usd      decimal(10,2)
+--
+-- Suggested columns for Option B (line item grain):
+--   order_id               integer
+--   user_id                integer
+--   order_date             date
+--   product_id             integer
+--   product_title          varchar
+--   category               varchar
+--   quantity               integer
+--   unit_price_usd         decimal(10,2)
+--   line_total_usd         decimal(10,2)
+
+{{ config(materialized='table') }}
+
+-- Your SQL here:

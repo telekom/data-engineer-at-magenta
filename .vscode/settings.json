@@ -1,0 +1,15 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.pixi/envs/dev/bin/python",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "innoverio.vscode-dbt-power-user"
+  },
+  "dbt.dbtPythonPathOverride": "${workspaceFolder}/.pixi/envs/dev/bin/python"
+}

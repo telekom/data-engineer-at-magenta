@@ -1,0 +1,4 @@
+load_from:
+  - python_package:
+      package_name: code_location_de
+      location_name: data-engineer-at-magenta

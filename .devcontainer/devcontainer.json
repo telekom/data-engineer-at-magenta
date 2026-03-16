@@ -1,0 +1,25 @@
+{
+  "name": "Data Engineer at Magenta",
+  "image": "ghcr.io/prefix-dev/pixi:0.47.0-bookworm",
+  "forwardPorts": [3000, 8080],
+  "postCreateCommand": "pixi install -e dev",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "ms-python.pyright",
+        "innoverio.vscode-dbt-power-user",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.formatOnSave": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+-- Intermediate model: order line items
+--
+-- This model explodes each cart's 'products' JSON array into individual rows
+-- (one row per product per order), then joins product details.
+--
+-- Input:  {{ ref('stg_orders') }}   (one row per order, products as JSON string)
+--         {{ ref('stg_products') }} (one row per product)
+--
+-- Expected output (one row per order line item):
+--   order_id          integer
+--   user_id           integer
+--   order_date        date
+--   product_id        integer
+--   quantity          integer
+--   product_title     varchar
+--   category          varchar
+--   unit_price_usd    decimal(10,2)
+--   line_total_usd    decimal(10,2)  -- quantity * unit_price_usd
+--
+-- DuckDB UNNEST hint:
+--   DuckDB supports unnesting JSON arrays with:
+--
+--   SELECT
+--     order_id,
+--     user_id,
+--     order_date,
+--     item->>'$.productId'  AS product_id,
+--     item->>'$.quantity'   AS quantity
+--   FROM stg_orders,
+--   UNNEST(json(products_raw)) AS t(item)
+--
+--   Or using json_extract with array casting:
+--   UNNEST(json_extract(products_raw, '$[*].productId')::INT[]) AS product_id
+--
+-- Pick whichever syntax you prefer. There is no single right answer here.
+
+{{ config(materialized='view') }}
+
+-- Your SQL here:

@@ -1,0 +1,71 @@
+[project]
+name = "data-engineer-at-magenta"
+version = "1.0.0"
+requires-python = "==3.12.*"
+description = "Data Engineer hiring challenge"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64", "linux-aarch64", "osx-arm64", "win-64"]
+
+[tool.pixi.dependencies]
+python = "3.12.*"
+git = "*"
+
+[tool.pixi.pypi-dependencies]
+dagster = ">=1.9,<2"
+dagster-webserver = ">=1.9,<2"
+dagster-dbt = ">=1.9,<2"
+dagster-duckdb = ">=1.9,<2"
+dagster-duckdb-pandas = ">=1.9,<2"
+dbt-core = ">=1.8,<2"
+dbt-duckdb = ">=1.8,<2"
+pandas = ">=2.0"
+pyarrow = "*"
+requests = "*"
+pydantic = ">=2.0"
+code-location-de = { path = "src/code_location_de", editable = true }
+
+[tool.pixi.feature.dev.pypi-dependencies]
+jupyterlab = "*"
+pytest = "*"
+pytest-cov = "*"
+pyright = "*"
+ruff = "*"
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+
+[tool.pixi.tasks]
+start-dev = "DAGSTER_HOME=$CONDA_PREFIX/.dagster dagster dev -w workspace.yaml"
+notebook = "jupyter lab notebooks/"
+dbt-run = "dbt run --project-dir src/code_location_de_dbt --profiles-dir src/code_location_de_dbt"
+dbt-test = "dbt test --project-dir src/code_location_de_dbt --profiles-dir src/code_location_de_dbt"
+dbt-docs-generate = "dbt docs generate --project-dir src/code_location_de_dbt --profiles-dir src/code_location_de_dbt"
+dbt-docs-serve = "dbt docs serve --project-dir src/code_location_de_dbt --profiles-dir src/code_location_de_dbt"
+lint = "ruff check src/"
+format = "ruff format src/"
+typecheck = "pyright src/code_location_de"
+test = "pytest src/code_location_de/code_location_de_tests/ -v --cov=code_location_de"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP"]
+mccabe.max-complexity = 5
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "standard"
+venvPath = "."
+venv = ".pixi/envs/dev"
+
+[tool.pytest.ini_options]
+testpaths = ["src/code_location_de/code_location_de_tests"]

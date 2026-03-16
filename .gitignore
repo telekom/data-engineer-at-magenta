@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Pixi
+.pixi/
+
+# Dagster
+.dagster/
+
+# DuckDB databases (generated artifacts)
+*.duckdb
+*.duckdb.wal
+
+# dbt
+src/code_location_de_dbt/target/
+src/code_location_de_dbt/dbt_packages/
+src/code_location_de_dbt/logs/
+
+# Jupyter
+notebooks/.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# IDE
+.vscode/extensions.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ruff cache
+.ruff_cache/
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/

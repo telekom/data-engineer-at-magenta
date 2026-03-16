@@ -1,0 +1,75 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      Raw tables written by the Dagster ingestion assets.
+      Materialize the ingestion asset group in Dagster before running dbt.
+    schema: main
+    tables:
+      - name: raw_products
+        description: "Product catalog fetched from the FakeStore API."
+        columns:
+          - name: id
+            description: "Unique product identifier."
+          - name: title
+            description: "Full product title."
+          - name: price
+            description: "Product price in USD."
+          - name: description
+            description: "Long-form product description."
+          - name: category
+            description: "Product category (e.g. electronics, jewelery, men's clothing)."
+          - name: image
+            description: "URL of the product image."
+          - name: rating_rate
+            description: "Average customer rating (0.0 – 5.0)."
+          - name: rating_count
+            description: "Number of customer ratings."
+
+      - name: raw_users
+        description: "User accounts fetched from the FakeStore API."
+        columns:
+          - name: id
+            description: "Unique user identifier."
+          - name: username
+            description: "Login username."
+          - name: email
+            description: "User email address."
+          - name: phone
+            description: "Contact phone number."
+          - name: name_firstname
+            description: "First name."
+          - name: name_lastname
+            description: "Last name."
+          - name: address_city
+            description: "City of residence."
+          - name: address_street
+            description: "Street name."
+          - name: address_number
+            description: "Street number."
+          - name: address_zipcode
+            description: "Postal code."
+          - name: address_geo_lat
+            description: "Latitude of the user's address (string)."
+          - name: address_geo_long
+            description: "Longitude of the user's address (string)."
+
+      - name: raw_carts
+        description: >
+          Shopping carts (orders) fetched from the FakeStore API.
+          Important: the 'products' column is a JSON string containing a list of
+          {productId, quantity} objects. Example:
+          '[{"productId": 1, "quantity": 2}, {"productId": 3, "quantity": 1}]'
+          You will need to unnest this structure in your transformation models.
+        columns:
+          - name: id
+            description: "Unique cart / order identifier."
+          - name: user_id
+            description: "Foreign key to raw_users.id."
+          - name: date
+            description: "Timestamp when the order was placed."
+          - name: products
+            description: >
+              JSON string array of line items. Each element:
+              {"productId": <int>, "quantity": <int>}

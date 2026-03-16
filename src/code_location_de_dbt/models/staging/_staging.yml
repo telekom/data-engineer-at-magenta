@@ -1,0 +1,34 @@
+version: 2
+
+# TODO: Add model descriptions and column-level tests for all staging models.
+#
+# dbt tests you should consider:
+#   - not_null        → primary keys must never be null
+#   - unique          → primary keys must be unique
+#   - accepted_values → categorical columns should only contain expected values
+#   - relationships   → foreign keys should reference existing rows
+#
+# dbt-utils tests worth exploring:
+#   - dbt_utils.not_empty_string
+#   - dbt_utils.expression_is_true
+#
+# Example:
+#
+# models:
+#   - name: stg_products
+#     description: "Cleaned and typed product catalog."
+#     columns:
+#       - name: product_id
+#         description: "Unique product identifier."
+#         tests:
+#           - not_null
+#           - unique
+#       - name: category
+#         tests:
+#           - accepted_values:
+#               values: ["electronics", "jewelery", "men's clothing", "women's clothing"]
+#
+# Add your model + column definitions below:
+
+models:
+  []

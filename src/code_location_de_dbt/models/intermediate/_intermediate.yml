@@ -1,0 +1,8 @@
+version: 2
+
+# TODO: Add model descriptions for intermediate models.
+# These are internal models — documentation is less critical than for marts,
+# but still useful for maintainability.
+
+models:
+  []

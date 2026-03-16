@@ -1,0 +1,39 @@
+-- Staging model: orders (carts)
+--
+-- Source: {{ source('raw', 'raw_carts') }}
+--
+-- Your goal: clean the raw cart data. This model intentionally stops before
+-- handling the nested 'products' JSON — that transformation belongs in the
+-- intermediate layer.
+--
+-- Expected output columns:
+--   order_id        integer    -- from: id
+--   user_id         integer    -- from: user_id
+--   order_date      date       -- from: date (cast to date)
+--   products_raw    varchar    -- from: products (keep as-is for now)
+--
+-- DECISION POINT: Nested JSON — where to unnest?
+--   The 'products' column is a JSON array string:
+--   '[{"productId": 1, "quantity": 2}, {"productId": 3, "quantity": 1}]'
+--
+--   Option A: Unnest here in stg_orders.sql using DuckDB's UNNEST() function
+--     Pro: Everything in SQL; staging layer is already flat
+--     Con: Staging models should generally map 1:1 to source tables;
+--          unnesting changes the grain (one row per source → many rows per cart)
+--
+--   Option B: Keep products_raw as a JSON string here, unnest in intermediate
+--     Pro: Staging stays clean; intermediate handles the complex transformation
+--     Con: The JSON string travels further down the pipeline before being processed
+--
+-- # DECISION: I chose Option ___ because ...
+--
+-- DuckDB hint (if you choose to unnest here or in intermediate):
+--   SELECT
+--     id AS order_id,
+--     UNNEST(json_extract(products, '$[*].productId')::INT[])  AS product_id,
+--     UNNEST(json_extract(products, '$[*].quantity')::INT[])   AS quantity
+--   FROM {{ source('raw', 'raw_carts') }}
+
+{{ config(materialized='view') }}
+
+-- Your SQL here:
